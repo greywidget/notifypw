@@ -1,5 +1,14 @@
-# Notify
+# NotifyPW
 Checks various internet sites and notify me via [ntfy](https://ntfy.sh) of anything of interest.
+
+# Careful with those line endings
+Although I include `Dockerfile`, `pyproject.toml` and `startup.sh` in the repo,
+in reality they will need to be created/copied into the directory from which 
+you are going to run `docker-compose`.  
+I had an issue with `startup.sh` because my `git` on `windows` is set to convert
+line endings to `CRLF` and `sh` doesn't like that. I don't really want to change
+my `git config` right now, so my solution is to use Synology Text Editor to mod
+the file once I've copied/created it on my server.
 
 # On PlayWright
 When I first encountered a message from Amazon: *Looks like you are a program...*

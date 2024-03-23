@@ -20,7 +20,7 @@ RUN git clone --branch main --single-branch --depth 1 https://github.com/greywid
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN playwright install --with-deps
+RUN playwright install --with-deps chromium
 
 COPY ./.env .
 
