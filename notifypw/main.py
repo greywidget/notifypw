@@ -100,6 +100,9 @@ def run():
             publish(f"{today}", priority=1, tag=HEARTBEAT)
             last_heartbeat = today
 
+        if not log.level == logging.WARNING and segment == 95:
+            log.setLevel(logging.WARNING)
+
         sleep(FIFTEEN_MINUTES)
 
 
