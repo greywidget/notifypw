@@ -100,11 +100,7 @@ def run():
             publish(f"{today}", priority=1, tag=HEARTBEAT)
             last_heartbeat = today
 
-        if segment > 90:
-            break
-
-        sleep(1)
-        # sleep(FIFTEEN_MINUTES)
+        sleep(FIFTEEN_MINUTES)
 
 
 if __name__ == "__main__":
