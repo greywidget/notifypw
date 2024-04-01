@@ -30,4 +30,4 @@ COPY ./startup.sh .
 # Set up Docker logging
 RUN ln -sf /dev/stdout /app/notify.log
 
-CMD ["./startup.sh"]
+CMD ["python3", "notifypw/main.py", "run"]
