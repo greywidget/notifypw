@@ -7,20 +7,21 @@ RUN apt-get update \
     python3-pip \
     git \
     && rm -rf /var/lib/apt/lists/*
-    
-RUN apt-get update \
-    && apt-get upgrade -y
 
-# Verify Python installation
-RUN python3 --version
+# Install Playwright
+RUN pip install --no-cache-dir playwright
+
+# Install Chromium with Playwright
+RUN playwright install --with-deps chromium
 
 WORKDIR /usr/src/app
 
+# Clone the repository. Force rebuild via CACHEBUST setting if repo changes
+ARG CACHEBUST
 RUN git clone --branch main --single-branch --depth 1 https://github.com/greywidget/notifypw.git .
 
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
-RUN playwright install --with-deps chromium
 
 COPY ./.env .
 

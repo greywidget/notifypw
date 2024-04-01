@@ -19,13 +19,13 @@ classifiers = [
 dependencies = [
   "beautifulsoup4",
   "keyring",
-  "playwright",
   "python-decouple",
   "requests",
   "typer[all]",
 ]
 [project.optional-dependencies]
 dev = [
+  "playwright",
 ]
 
 [project.urls]

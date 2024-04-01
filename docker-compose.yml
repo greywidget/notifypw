@@ -2,3 +2,5 @@ services:
   python:
     build:
       context: .
+      args:
+        CACHEBUST: 1
