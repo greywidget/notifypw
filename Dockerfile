@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir playwright
 # Install Chromium with Playwright
 RUN playwright install --with-deps chromium
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Clone the repository. Force rebuild via CACHEBUST setting if repo changes
 ARG CACHEBUST
@@ -26,5 +26,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./.env .
 
 COPY ./startup.sh .
+
+# Set up Docker logging
+RUN ln -sf /dev/stdout /app/notify.log
 
 CMD ["./startup.sh"]
