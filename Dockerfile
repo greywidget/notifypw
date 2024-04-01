@@ -25,8 +25,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./.env .
 
-COPY ./startup.sh .
-
 # Set up Docker logging
 RUN ln -sf /dev/stdout /app/notify.log
 
