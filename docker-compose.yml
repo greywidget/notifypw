@@ -5,4 +5,4 @@ services:
       args:
         CACHEBUST: 3
     volumes:
-      - .\data:/app/data
+      - ./data:/app/data
