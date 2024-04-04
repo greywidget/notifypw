@@ -25,7 +25,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./.env .
 
-# Set up Docker logging
-RUN ln -sf /dev/stdout /app/notify.log
-
 CMD ["python3", "notifypw/main.py", "run"]

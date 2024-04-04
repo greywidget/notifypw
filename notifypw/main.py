@@ -1,5 +1,7 @@
 import itertools
 import logging
+import sqlite3
+import sys
 from datetime import date, timedelta
 from pathlib import Path
 from time import sleep
@@ -18,15 +20,18 @@ from scrapers.scrape import Scraper, scrape_amazon_ebook, scrape_scorp
 from typing_extensions import Annotated
 
 DEFAULT_TAG = "snake"
+DB_FILE = Path.cwd() / "data" / "scrapers.db"
+conn = sqlite3.connect(DB_FILE)
+c = conn.cursor()
+
 FIFTEEN_MINUTES = 15 * 60
 HEARTBEAT = "white_check_mark"
-LOG_FILE = Path(__file__).resolve().parent.parent / "notify.log"
 SKULL = "skull"
 
 FMT = "%(asctime)s %(levelname)s %(message)s"
 logging.basicConfig(
-    filename=LOG_FILE.absolute(),
     level=logging.INFO,
+    stream=sys.stdout,
     format=FMT,
     datefmt="%Y-%m-%d %H:%M:%S",
 )
@@ -44,6 +49,14 @@ except NoKeyringError:
     topic = config("TOPIC")
 
 url = f"https://ntfy.sh/{topic}"
+
+
+def init_db():
+    with conn:
+        c.execute("""CREATE TABLE IF NOT EXISTS scrapers (
+                  scraper TEXT Primary Key,
+                  max_price INT DEFAULT 0)""")
+    conn.close()
 
 
 @app.command()
