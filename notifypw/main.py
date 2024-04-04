@@ -85,6 +85,7 @@ def run():
     **Loop** through event checks
     """
     log = logging.getLogger(__name__)
+    init_db()
 
     last_heartbeat = date.today() - timedelta(days=1)
     while True:
