@@ -1,15 +1,33 @@
+import sqlite3
 from dataclasses import dataclass
 from decimal import Decimal
+from pathlib import Path
 from typing import Callable
 
 import requests
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
-EBOOK_MAX = Decimal("9.99")
 AVAILABLE = "Available"
+ONE_HUNDRED = Decimal(100)
 SOLD_OUT = "Sold Out"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+
+
+DB_FILE = Path.cwd() / "data" / "scrapers.db"
+conn = sqlite3.connect(DB_FILE)
+c = conn.cursor()
+
+
+def get_max_price(scraper_name):
+    with conn:
+        c.execute(
+            "SELECT max_price FROM scrapers WHERE scraper = :scraper",
+            {"scraper": scraper_name},
+        )
+        res = c.fetchone()
+        max_price = Decimal(res[0]) / ONE_HUNDRED if res else Decimal("0.00")
+        return max_price
 
 
 @dataclass()
@@ -71,7 +89,7 @@ def scrape_amazon_ebook() -> str:
         .text.strip()
     )
 
-    if Decimal(price.replace("£", "")) < EBOOK_MAX:
-        return f"Richard Osmond ebook, The Last Devil to Die - Price Drop! {price} (down from £{EBOOK_MAX})"
+    if Decimal(price.replace("£", "")) < get_max_price("scrape_amazon_ebook"):
+        return f"Richard Osmond ebook, The Last Devil to Die - Price Drop! {price}"
 
     return ""
