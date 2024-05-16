@@ -72,7 +72,7 @@ def scrape_paper() -> str:
 
 
 def scrape_amazon_ebook() -> str:
-    url = "https://www.amazon.co.uk/Last-Devil-Die-Thursday-Murder-ebook/dp/B0BCY25BMY/"
+    url = "https://www.amazon.co.uk/We-Solve-Murders-brand-new-Thursday-ebook/dp/B0CQ256S11/"
     with sync_playwright() as playwright:
         chromium = playwright.chromium
         browser = chromium.launch()
@@ -83,6 +83,13 @@ def scrape_amazon_ebook() -> str:
     soup = BeautifulSoup(data, "html.parser")
 
     a_string = soup.find(string=" Available instantly ")
+    # This is not available yet, it's pre-order so the above will find nothing
+    # Just exit for now
+    if not a_string:
+        return ""
+    else:
+        return "Ooh, Richard Osmond ebook, We Solve Murders is now available"
+
     price = (
         a_string.find_parent()
         .parent.parent.parent.find("span", class_="a-color-price")
@@ -90,6 +97,6 @@ def scrape_amazon_ebook() -> str:
     )
 
     if Decimal(price.replace("£", "")) < get_max_price("scrape_amazon_ebook"):
-        return f"Richard Osmond ebook, The Last Devil to Die - Price Drop! {price}"
+        return f"Richard Osmond ebook, We Solve Murders: - Price Drop! {price}"
 
     return ""
