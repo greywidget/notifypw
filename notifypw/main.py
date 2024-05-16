@@ -13,10 +13,9 @@ from decouple import config
 from keyring.errors import NoKeyringError
 from schedule.intervals import (
     DAILY,
-    HOURLY,
     NINETY_SIX,
 )
-from scrapers.scrape import Scraper, scrape_amazon_ebook, scrape_scorp
+from scrapers.scrape import Scraper, scrape_amazon_ebook
 from typing_extensions import Annotated
 
 DEFAULT_TAG = "snake"
