@@ -39,7 +39,7 @@ segments = itertools.cycle(NINETY_SIX)
 
 app = typer.Typer(add_completion=False, rich_markup_mode="markdown")
 scrapers = [
-    Scraper(name="scorp", tag="hocho", segments=HOURLY, scraper=scrape_scorp),
+    # Scraper(name="scorp", tag="hocho", segments=HOURLY, scraper=scrape_scorp),
     Scraper(name="ebook", tag="book", segments=DAILY, scraper=scrape_amazon_ebook),
 ]
 
