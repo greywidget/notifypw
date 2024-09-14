@@ -90,9 +90,17 @@ def scrape_amazon_ebook() -> str:
     # else:
     #     return "Ooh, Richard Osmond ebook, We Solve Murders is now available"
 
+    # price = (
+    #     a_string.find_parent()
+    #     .parent.parent.parent.find("span", class_="a-color-price")
+    #     .text.strip()
+    # )
+
+    # Hmm seems there is an extra parent now. Note some of this html does not
+    # actually appear in the browser, you need to run this code to see it.
     price = (
         a_string.find_parent()
-        .parent.parent.parent.find("span", class_="a-color-price")
+        .parent.parent.parent.parent.find("span", class_="a-color-price")
         .text.strip()
     )
 
