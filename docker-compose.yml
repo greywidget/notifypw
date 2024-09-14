@@ -3,6 +3,6 @@ services:
     build:
       context: .
       args:
-        CACHEBUST: 7
+        CACHEBUST: 8
     volumes:
       - ./data:/app/data
