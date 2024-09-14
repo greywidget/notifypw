@@ -85,10 +85,10 @@ def scrape_amazon_ebook() -> str:
     a_string = soup.find(string=" Available instantly ")
     # This is not available yet, it's pre-order so the above will find nothing
     # Just exit for now
-    if not a_string:
-        return ""
-    else:
-        return "Ooh, Richard Osmond ebook, We Solve Murders is now available"
+    # if not a_string:
+    #     return ""
+    # else:
+    #     return "Ooh, Richard Osmond ebook, We Solve Murders is now available"
 
     price = (
         a_string.find_parent()
