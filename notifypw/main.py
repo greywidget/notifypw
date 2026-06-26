@@ -15,7 +15,7 @@ from schedule.intervals import (
     DAILY,
     NINETY_SIX,
 )
-from scrapers.scrape import Scraper, scrape_amazon_ebook
+from scrapers.scrape import Scraper, scrape_amazon_ebook, scrape_amazon_rootslayer
 from typing_extensions import Annotated
 
 DEFAULT_TAG = "snake"
@@ -40,6 +40,12 @@ app = typer.Typer(add_completion=False, rich_markup_mode="markdown")
 scrapers = [
     # Scraper(name="scorp", tag="hocho", segments=HOURLY, scraper=scrape_scorp),
     Scraper(name="ebook", tag="book", segments=DAILY, scraper=scrape_amazon_ebook),
+    Scraper(
+        name="rootslayer",
+        tag="wilted_flower",
+        segments=DAILY,
+        scraper=scrape_amazon_rootslayer,
+    ),
 ]
 
 try:

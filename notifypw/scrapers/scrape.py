@@ -108,3 +108,29 @@ def scrape_amazon_ebook() -> str:
         return f"Richard Osmond ebook, We Solve Murders: - Price Drop! {price}"
 
     return ""
+
+
+def scrape_amazon_rootslayer() -> str:
+    url = (
+        "https://www.amazon.co.uk/Root-Slayer-Radius-Shovel-114x9-6x26-6/dp/B01M1CCIWH/"
+    )
+    with sync_playwright() as playwright:
+        chromium = playwright.chromium
+        browser = chromium.launch()
+        page = browser.new_page()
+        page.goto(url)
+        data = page.content()
+
+    soup = BeautifulSoup(data, "html.parser")
+
+    pounds = soup.find("span", class_="a-price-whole")
+    pence = soup.find("span", class_="a-price-fraction")
+
+    # Hmm seems there is an extra parent now. Note some of this html does not
+    # actually appear in the browser, you need to run this code to see it.
+    price = Decimal(f"{pounds.text}{pence.text}")
+
+    if price < get_max_price("scrape_amazon_rootslayer"):
+        return f"Root Slayer Original Shovel: - Price Drop! {price}"
+
+    return ""
