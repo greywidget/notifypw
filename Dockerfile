@@ -16,7 +16,10 @@ ARG CACHEBUST
 RUN git clone --branch main --single-branch --depth 1 https://github.com/greywidget/notifypw.git .
 
 # Install the Python dependencies
-RUN uv sync --no-dev
+RUN uv sync
+
+# Manually set up path to the venv
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Install Chromium with Playwright
 RUN playwright install --with-deps chromium
