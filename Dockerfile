@@ -1,18 +1,13 @@
-FROM ubuntu:22.04
+FROM python:3.14-slim
 
 # Install required packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    python3 \
-    python3-pip \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Playwright
-RUN pip install --no-cache-dir playwright
-
-# Install Chromium with Playwright
-RUN playwright install --with-deps chromium
+# Install uv
+RUN pip install uv
 
 WORKDIR /app
 
@@ -20,9 +15,12 @@ WORKDIR /app
 ARG CACHEBUST
 RUN git clone --branch main --single-branch --depth 1 https://github.com/greywidget/notifypw.git .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install the Python dependencies
+RUN uv sync --no-dev
+
+# Install Chromium with Playwright
+RUN playwright install --with-deps chromium
 
 COPY ./.env .
 
-CMD ["python3", "notifypw/main.py", "run"]
+CMD ["python", "notifypw/main.py", "run"]
