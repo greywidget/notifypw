@@ -27,7 +27,7 @@ got the Image down to 1.2 GB.
 **I think my original comment below is not quite correct**
 - I agree that everything above the `ARG CACHEBUST` should be preserved from the cache.
 - To rebuild from below that, (`git clone ... down`) you can pass a unique `CACHEBUST` value into the build:
-- `docker compose build --build-arg CACHEBUST=$(date + %s)`
+- `docker compose build --build-arg CACHEBUST=$(date +%s)`
 - `docker compose up -d`
 
 *I think this isn't quite right, see above*

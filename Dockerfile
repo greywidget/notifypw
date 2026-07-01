@@ -16,7 +16,7 @@ ARG CACHEBUST
 RUN git clone --branch main --single-branch --depth 1 https://github.com/greywidget/notifypw.git .
 
 # Install the Python dependencies
-RUN uv sync
+RUN uv sync --extra dev
 
 # Manually set up path to the venv
 ENV PATH="/app/.venv/bin:$PATH"
