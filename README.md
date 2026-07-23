@@ -30,6 +30,11 @@ got the Image down to 1.2 GB.
 - `docker compose build --build-arg CACHEBUST=$(date +%s)`
 - `docker compose up -d`
 
+**The Python Image**
+Note that in `DockerFile` I've specified `FROM python:3.14-slim`. Since this is quite high level (I don't specify 3.13.1 for example), `python:3.14-slim` is a moving tag and if Docker checks the registry and finds a newer version of the image it will download that, busting the cache and forcing a rebuild of everything from that point down.
+
+Since I don't expect the base Python image to change all that much, and the rebuild took about 4 minutes, I'm going to leave it as is for now.
+
 *I think this isn't quite right, see above*
 I rearranged the `Dockerfile` so that I can use a *cache-busting* `ARG` to control when I want to rebuild from the `git clone` down. If you change the repo you must manually change to `CACHEBUST` value in the `docker-compose.yml` file (don't use a value you've used before).  **Note** Although `docker-compose.yml` is in the repo - you need to update it on the Synology Server in order to get the repo to re-clone so this step needs to be done manually. Use the Synology File Edit application to bump the value.
 
