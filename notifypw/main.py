@@ -51,6 +51,7 @@ scrapers = [
         tag="wilted_flower",
         segments=DAILY,
         scraper=scrape_amazon_rootslayer,
+        active=False,
     ),
 ]
 
