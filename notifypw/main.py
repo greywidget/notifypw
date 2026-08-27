@@ -3,6 +3,7 @@ import logging
 import sqlite3
 import sys
 from datetime import date, timedelta
+from decimal import Decimal
 from pathlib import Path
 from time import sleep
 
@@ -15,7 +16,7 @@ from schedule.intervals import (
     DAILY,
     NINETY_SIX,
 )
-from scrapers.scrape import Scraper, scrape_amazon_ebook, scrape_amazon_rootslayer
+from scrapers.scrape import Scraper, scrape_amazon_ebook, scrape_amazon_kindle
 from typing_extensions import Annotated
 
 DEFAULT_TAG = "snake"
@@ -47,11 +48,11 @@ scrapers = [
         active=False,
     ),
     Scraper(
-        name="rootslayer",
-        tag="wilted_flower",
+        name="kindle",
+        tag="book",
         segments=DAILY,
-        scraper=scrape_amazon_rootslayer,
-        active=False,
+        scraper=scrape_amazon_kindle,
+        active=True,
     ),
 ]
 
@@ -89,6 +90,14 @@ def publish(
             "Tags": tag,
         },
     )
+
+
+@app.command()
+def run_one():
+    scraper = scrape_amazon_kindle
+    # message = scraper(pricer=lambda x: Decimal("190.0"))
+    message = scraper()
+    print(message)
 
 
 @app.command()

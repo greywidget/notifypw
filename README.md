@@ -43,5 +43,6 @@ Note that you must run `docker-compose up -d --build` (i.e. use the `--build`) f
 
 # Running locally
 From `..python_projects\notifypw\notifypw` you can run `python main.py run`
+- You could also run `python main.py publish "Come Hither"`
 
 **Note that you will require the scrapers.db file from the Synology Server. Then `git restore` back to the empty one,**

@@ -110,10 +110,8 @@ def scrape_amazon_ebook() -> str:
     return ""
 
 
-def scrape_amazon_rootslayer() -> str:
-    url = (
-        "https://www.amazon.co.uk/Root-Slayer-Radius-Shovel-114x9-6x26-6/dp/B01M1CCIWH/"
-    )
+def scrape_amazon_kindle(pricer=get_max_price) -> str:
+    url = "https://www.amazon.co.uk/dp/B0CFPWLGF2/"
     with sync_playwright() as playwright:
         chromium = playwright.chromium
         browser = chromium.launch()
@@ -130,7 +128,7 @@ def scrape_amazon_rootslayer() -> str:
     # actually appear in the browser, you need to run this code to see it.
     price = Decimal(f"{pounds.text}{pence.text}")
 
-    if price < get_max_price("scrape_amazon_rootslayer"):
-        return f"Root Slayer Original Shovel: - Price Drop! {price}"
+    if price < pricer("scrape_amazon_kindle"):
+        return f"Amazon Kindle: - Price Drop! {price}"
 
     return ""
