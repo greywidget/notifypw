@@ -2,8 +2,8 @@ import itertools
 import logging
 import sqlite3
 import sys
+from collections import defaultdict
 from datetime import date, timedelta
-from decimal import Decimal
 from pathlib import Path
 from time import sleep
 
@@ -20,6 +20,8 @@ from scrapers.scrape import Scraper, scrape_amazon_ebook, scrape_amazon_kindle
 from typing_extensions import Annotated
 
 DEFAULT_TAG = "snake"
+MAX_FAIL = 3
+fails = defaultdict(int)
 DB_FILE = Path.cwd() / "data" / "scrapers.db"
 conn = sqlite3.connect(DB_FILE)
 c = conn.cursor()
@@ -27,6 +29,7 @@ c = conn.cursor()
 FIFTEEN_MINUTES = 15 * 60
 HEARTBEAT = "white_check_mark"
 SKULL = "skull"
+WORRIED = "worried"
 
 FMT = "%(asctime)s %(levelname)s %(message)s"
 logging.basicConfig(
@@ -121,9 +124,14 @@ def run():
                 except Exception as e:
                     log.exception(f"{segment:02} | {scraper}", exc_info=e)
                     all_good = False
-                    message = f"{scraper} | Exception: {e}. Disabling call."
-                    tag = SKULL
-                    scraper.active = False
+                    fails[scraper.name] = fail_count = fails[scraper.name] + 1
+                    message = f"{scraper} | Exception: {e}. Fails={fail_count}."
+                    tag = WORRIED
+
+                    if fail_count > MAX_FAIL:
+                        message += " . Disabling call."
+                        tag = SKULL
+                        scraper.active = False
 
                 if message:
                     publish(message, tag=tag)
