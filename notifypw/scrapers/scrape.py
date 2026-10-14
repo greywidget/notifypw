@@ -72,7 +72,7 @@ def scrape_paper() -> str:
 
 
 def scrape_amazon_ebook() -> str:
-    url = "https://www.amazon.co.uk/We-Solve-Murders-brand-new-Thursday-ebook/dp/B0CQ256S11/"
+    url = "https://www.amazon.co.uk/Trade-Blood-addictive-unputdownable-eccentric-ebook/dp/B0FTF7GN39/"
     with sync_playwright() as playwright:
         chromium = playwright.chromium
         browser = chromium.launch()
@@ -105,7 +105,7 @@ def scrape_amazon_ebook() -> str:
     )
 
     if Decimal(price.replace("£", "")) < get_max_price("scrape_amazon_ebook"):
-        return f"Richard Osmond ebook, We Solve Murders: - Price Drop! {price}"
+        return f"A Trade of Blood eBook: - Price Drop! {price}"
 
     return ""
 

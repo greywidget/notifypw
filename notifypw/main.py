@@ -48,7 +48,7 @@ scrapers = [
         tag="book",
         segments=DAILY,
         scraper=scrape_amazon_ebook,
-        active=False,
+        active=True,
     ),
     Scraper(
         name="kindle",
@@ -97,7 +97,7 @@ def publish(
 
 @app.command()
 def run_one():
-    scraper = scrape_amazon_kindle
+    scraper = scrape_amazon_ebook
     # message = scraper(pricer=lambda x: Decimal("190.0"))
     message = scraper()
     print(message)
