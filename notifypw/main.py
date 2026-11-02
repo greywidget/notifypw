@@ -48,7 +48,7 @@ scrapers = [
         tag="book",
         segments=DAILY,
         scraper=scrape_amazon_ebook,
-        active=True,
+        active=False,
     ),
     Scraper(
         name="kindle",
